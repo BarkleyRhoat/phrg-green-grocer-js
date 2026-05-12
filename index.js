@@ -1,3 +1,22 @@
+let items = [
+  { AVOCADO: { price: 3.0, clearance: true } },
+  { KALE: { price: 3.0, clearance: false } },
+  { BLACK_BEANS: { price: 2.5, clearance: false } },
+  { ALMONDS: { price: 9.0, clearance: false } },
+  { TEMPEH: { price: 3.0, clearance: true } },
+  { CHEESE: { price: 6.5, clearance: false } },
+  { BEER: { price: 13.0, clearance: false } },
+  { PEANUT_BUTTER: { price: 3.0, clearance: true } },
+  { BEETS: { price: 2.5, clearance: false } },
+  { "SOY MILK": { price: 4.5, clearance: true } },
+];
+
+let coupons = [
+  { item: "AVOCADO", num: 2, cost: 5.0 },
+  { item: "BEER", num: 2, cost: 20.0 },
+  { item: "CHEESE", num: 3, cost: 15.0 },
+];
+
 const consolidateCart = (cart) => {
   return cart.reduce((counts, item) => {
     const name = Object.keys(item)[0];
@@ -20,7 +39,11 @@ const applyCoupons = (cart, coupons) => {
       if (cart[couponKey]) {
         cart[couponKey].count += couponCount;
       } else {
-        cart[couponKey] = { price: coupon.cost, clearance: cart[name].clearance, count: couponCount };
+        cart[couponKey] = {
+          price: coupon.cost,
+          clearance: cart[name].clearance,
+          count: couponCount,
+        };
       }
 
       cart[name].count -= coupon.num * couponCount;
@@ -28,21 +51,32 @@ const applyCoupons = (cart, coupons) => {
   }
   return cart;
 };
+
 const applyClearance = (cart) => {
   const clearanceCart = {};
   for (const item in cart) {
-    const cartItem = cart[item]; 
+    const cartItem = cart[item];
     clearanceCart[item] = {
-      ...cartItem, 
-      price: cartItem.clearance 
-        ? parseFloat((cartItem.price * 0.8).toFixed(2)) 
+      ...cartItem,
+      price: cartItem.clearance
+        ? parseFloat((cartItem.price * 0.8).toFixed(2))
         : cartItem.price,
     };
   }
   return clearanceCart;
 };
 
+function checkout(cart, coupons) {
+  let consolidatedCart = consolidateCart(cart);
+  let cartWithCoupons = applyCoupons(consolidatedCart, coupons);
+  let cartWithClearance = applyClearance(cartWithCoupons);
+  let total = 0;
+  for (let item in cartWithClearance) {
+    total += cartWithClearance[item].price * cartWithCoupons[item].count;
+  }
 
-const checkout = (cart, coupons) => {
-  // code here
-};
+  if (total > 100) {
+    total = total - total * 0.1;
+  }
+  return total;
+}
