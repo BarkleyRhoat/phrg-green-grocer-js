@@ -13,14 +13,14 @@ const consolidateCart = (cart) => {
 
 const applyCoupons = (cart, coupons) => {
   for (const coupon of coupons) {
-    if (cart[coupon.item] && cart[coupon.item].count >= coupoun.num) {
+    if (cart[coupon.item] && cart[coupon.item].count >= coupon.num) {
       const name = coupon.item;
       const couponCount = Math.floor(cart[name].count / coupon.num);
-      const couponName = `${name} W/COUPON`;
+      const couponKey = `${name} W/COUPON`;
       if (cart[couponKey]) {
         cart[couponKey].count += couponCount;
       } else {
-        cart[couponKey] = { price: cart[name].price, clearance: cart[name].clearance, count: couponCount };
+        cart[couponKey] = { price: coupon.cost, clearance: cart[name].clearance, count: couponCount };
       }
       cart[name].count -= couponCount * coupon.num;
       
@@ -33,5 +33,6 @@ const applyClearance = (cart) => {
   // code here
 };
 
-const checkout = (cart, coupons) => {};
-  
+const checkout = (cart, coupons) => {
+  // code here
+};
