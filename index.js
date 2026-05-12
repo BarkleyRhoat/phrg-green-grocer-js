@@ -22,13 +22,12 @@ const applyCoupons = (cart, coupons) => {
       } else {
         cart[couponKey] = { price: coupon.cost, clearance: cart[name].clearance, count: couponCount };
       }
-      cart[name].count -= couponCount * coupon.num;
-      
+
+      cart[name].count -= coupon.num * couponCount;
     }
   }
   return cart;
 };
-
 const applyClearance = (cart) => {
   // code here
 };
