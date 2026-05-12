@@ -29,8 +29,19 @@ const applyCoupons = (cart, coupons) => {
   return cart;
 };
 const applyClearance = (cart) => {
-  // code here
+  const clearanceCart = {};
+  for (const item in cart) {
+    const cartItem = cart[item]; 
+    clearanceCart[item] = {
+      ...cartItem, 
+      price: cartItem.clearance 
+        ? parseFloat((cartItem.price * 0.8).toFixed(2)) 
+        : cartItem.price,
+    };
+  }
+  return clearanceCart;
 };
+
 
 const checkout = (cart, coupons) => {
   // code here
