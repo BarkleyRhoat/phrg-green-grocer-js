@@ -1,22 +1,3 @@
-let items = [
-  { AVOCADO: { price: 3.0, clearance: true } },
-  { KALE: { price: 3.0, clearance: false } },
-  { BLACK_BEANS: { price: 2.5, clearance: false } },
-  { ALMONDS: { price: 9.0, clearance: false } },
-  { TEMPEH: { price: 3.0, clearance: true } },
-  { CHEESE: { price: 6.5, clearance: false } },
-  { BEER: { price: 13.0, clearance: false } },
-  { PEANUT_BUTTER: { price: 3.0, clearance: true } },
-  { BEETS: { price: 2.5, clearance: false } },
-  { "SOY MILK": { price: 4.5, clearance: true } },
-];
-
-let coupons = [
-  { item: "AVOCADO", num: 2, cost: 5.0 },
-  { item: "BEER", num: 2, cost: 20.0 },
-  { item: "CHEESE", num: 3, cost: 15.0 },
-];
-
 const consolidateCart = (cart) => {
   return cart.reduce((counts, item) => {
     const name = Object.keys(item)[0];
@@ -79,4 +60,3 @@ function checkout(cart, coupons) {
   }
   return total;
 }
-
