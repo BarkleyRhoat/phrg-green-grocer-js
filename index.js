@@ -30,6 +30,7 @@ const consolidateCart = (cart) => {
   }, {});
 };
 
+// look over this more
 const applyCoupons = (cart, coupons) => {
   for (const coupon of coupons) {
     if (cart[coupon.item] && cart[coupon.item].count >= coupon.num) {
@@ -53,17 +54,15 @@ const applyCoupons = (cart, coupons) => {
 };
 
 const applyClearance = (cart) => {
-  const clearanceCart = {};
   for (const item in cart) {
-    const cartItem = cart[item];
-    clearanceCart[item] = {
-      ...cartItem,
-      price: cartItem.clearance
-        ? parseFloat((cartItem.price * 0.8).toFixed(2))
-        : cartItem.price,
+    cart[item] = {
+      ...cart[item],
+      price: cart[item].clearance
+        ? parseFloat((cart[item].price * 0.8).toFixed(2))
+        : cart[item].price,
     };
   }
-  return clearanceCart;
+  return cart;
 };
 
 function checkout(cart, coupons) {
@@ -80,3 +79,4 @@ function checkout(cart, coupons) {
   }
   return total;
 }
+
