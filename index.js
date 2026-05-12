@@ -1,14 +1,15 @@
-const consolidateCart = (cart) => {
-  return cart.reduce((counts, item) => {
-    const name = Object.keys(item)[0];
-    const { price, clearance } = item[name];
-    if (counts[name]) {
-      counts[name].count += 1;
-    } else {
-      counts[name] = { price, clearance, count: 1 };
-    }
-    return counts;
-  }, {});
+function cb(count, item) {
+  const name = Object.keys(item)[0];
+  const { price, clearance } = item[name];
+  if (count[name]) {
+    count[name].count += 1;
+  } else {
+    count[name] = { price, clearance, count: 1 };
+  }
+  return count;
+}
+const consolidateCart = (shoppingCart) => {
+  return shoppingCart.reduce(cb, {});
 };
 
 // look over this more
@@ -39,7 +40,7 @@ const applyClearance = (cart) => {
     cart[item] = {
       ...cart[item],
       price: cart[item].clearance
-        ? parseFloat((cart[item].price * 0.8).toFixed(2))
+        ? Number((cart[item].price * 0.8).toFixed(2))
         : cart[item].price,
     };
   }
